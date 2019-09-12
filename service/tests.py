@@ -3,154 +3,99 @@ Testing file for all modules in the Service Package
 """
 
 import logging
+import unittest
 from service.esi import EsiHandler
 from service.fitparser import Parser
 
 
-def test_request_market_groups():
-    """
-    Tests EsiHandler.request_market_groups()
-    :return: True if tests pass, default=false
-    """
-    try:
+class TestEsi(unittest.TestCase):
+    def test_request_market_groups(self):
+        """
+        Tests EsiHandler.request_market_groups()
+        """
         result = EsiHandler.request_market_groups()
-        assert result is not None, "Returned value cannot be NoneType."
-        assert type(result) == list, "Returned type is not a list."
-        assert len(result) > 0, "Returned list is empty."
+        self.assertIsNotNone(result)
+        self.assertIsInstance(result, list)
+        self.assertTrue(len(result) > 0)
 
-    except AssertionError as error:
-        logging.error("One or more tests failed at: EsiHandler.request_market_groups()")
-        logging.error(error)
-        return False
-
-    return True
-
-
-def test_request_type_info():
-    """
-    Tests EsiHandler.request_type_info()
-    :return: True if tests pass, default=false
-    """
-    try:
+    def test_request_type_info(self):
+        """
+        Tests EsiHandler.request_type_info()
+        """
         # Valid type ID
+        # Insulated Stabilizer Array=11111
         result = EsiHandler.request_type_info(11111)
-        assert result is not None, "Returned value cannot be NoneType."
-        assert type(result) == dict, "Returned type is not dict."
-        assert result['name'] == "Insulated Stabilizer Array", "Request is returning bad data."
-        assert result['group_id'] == 302, "Request is returning bad data."
+        self.assertIsNotNone(result)
+        self.assertIsInstance(result, dict)
+        self.assertEqual(result['name'], "Insulated Stabilizer Array")
+        self.assertEqual(result['group_id'], 302)
 
         # Invalid type ID
         result = EsiHandler.request_type_info(111111111)
-        assert result is None, "Returned value is not None for invalid type ID."
+        self.assertIsNone(result)
 
         # Non-Integer type ID
         result = EsiHandler.request_type_info("aaaaa")
-        assert result is None, "Returned value is not None for non-int type ID."
+        self.assertIsNone(result)
 
-    except AssertionError as error:
-        logging.error("One or more tests failed at: EsiHandler.request_type_info().")
-        logging.error(error)
-        return False
-
-    return True
-
-
-def test_request_regions():
-    """
-    Tests EsiHandler.request_regions()
-    :return: True if tests pass, default=false
-    """
-    try:
+    def test_request_regions(self):
+        """
+        Tests EsiHandler.request_regions()
+        """
         result = EsiHandler.request_regions()
-        assert result is not None, "Returned value cannot be NoneType."
-        assert type(result) == list, "Returned type is not a list."
-        assert len(result) > 0, "Returned list is empty"
+        self.assertIsNotNone(result)
+        self.assertIsInstance(result, list)
+        self.assertTrue(len(result) > 0)
 
-    except AssertionError as error:
-        logging.error("One or more tests failed at: EsiHandler.request_regions().")
-        logging.error(error)
-        return False
-
-    return True
-
-
-def test_request_region_info():
-    """
-    Tests EsiHandler.request_region_info()
-    :return: True if tests pass, default=false
-    """
-    try:
+    def test_request_region_info(self):
+        """
+        Tests EsiHandler.request_region_info()
+        """
         # Valid region ID
+        # The Forge=10000002
         result = EsiHandler.request_region_info(10000002)
-        assert result is not None, "Returned value cannot be NoneType"
-        assert type(result) == dict, "Returned type is not dict"
-        assert result['name'] == "The Forge", "Request is returning bad data."
+        self.assertIsNotNone(result)
+        self.assertIsInstance(result, dict)
+        self.assertEqual(result['name'], "The Forge")
 
         # Invalid region ID
         result = EsiHandler.request_region_info(1111)
-        assert result is None, "Returned value is not None for invalid region ID"
+        self.assertIsNone(result)
 
-        # Non-Integer region ID
+        # Non-integer region ID
         result = EsiHandler.request_region_info("aaaa")
-        assert result is None, "Returned value is not None for a non-int region ID"
+        self.assertIsNone(result)
 
-    except AssertionError as error:
-        logging.error("One or more tests failed at: EsiHandler.request_region_info().")
-        logging.error(error)
-        return False
-
-    return True
-
-
-def test_request_market_region_history():
-    """
-    Tests EsiHandler.request_market_region_history()
-    :return: True if tests pass, default=false
-    """
-    try:
+    def test_request_market_region_history(self):
+        """
+        Tests EsiHandler.request_market_region_history()
+        """
         # Valid type ID, valid region ID
+        # Esoteria=10000039, Nanite Repair Paste=28668
         result = EsiHandler.request_market_region_history(10000039, 28668)
-        assert result is not None, "Returned result cannot be NoneType."
-        assert type(result) is list, "Returned type is not list."
-        assert len(result) > 0, "Returned list is empty"  # This item will always have market history
+        self.assertIsNotNone(result)
+        self.assertIsInstance(result, list)
+        self.assertTrue(len(result) > 0)
 
         # Invalid type ID
         result = EsiHandler.request_market_region_history(10000039, 11)
-        assert result is None, "Returned value is not None for invalid type ID."
+        self.assertIsNone(result)
 
         # Invalid region ID
         result = EsiHandler.request_market_region_history(1, 28668)
-        assert result is None, "Returned value is not None for invalid region ID."
+        self.assertIsNone(result)
 
-        # Non-Integer type ID
+        # Non-integer type ID
         result = EsiHandler.request_market_region_history(10000039, "aaaaa")
-        assert result is None, "Returned value is not None for non-int type ID."
+        self.assertIsNone(result)
 
-        # Non-Integer region ID
+        # Non-integer region ID
         result = EsiHandler.request_market_region_history("aaaaa", 28668)
-        assert result is None, "Returned value is not None for non-int region ID."
-
-    except AssertionError as error:
-        logging.error("One or more tests failed at: EsiHandler.request_market_region_history().")
-        logging.error(error)
-        return False
-
-    return True
+        self.assertIsNone(result)
 
 
 if __name__ == '__main__':
     logging.basicConfig(level=logging.INFO)
     logging.info("Running all tests...")
 
-    if (
-        # Esi tests
-        test_request_market_groups() and
-        test_request_type_info() and
-        test_request_regions() and
-        test_request_region_info() and
-        test_request_market_region_history()
-    ):
-        logging.info("All tests passed.")
-
-    else:
-        logging.warn("Some tests failed.")
+    unittest.main()
