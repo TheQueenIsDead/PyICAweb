@@ -11,7 +11,7 @@ class EsiHandler(object):
     # TODO Add ESI SSO to perform search on structures
 
     @staticmethod
-    def perform_request(url):
+    def __perform_request(url):
         """
         Support function that attempts to perform a GET request on a specified URL and returns data
         :param url: URL to perform GET request
@@ -21,7 +21,7 @@ class EsiHandler(object):
             if response:
                 data = response.json()
             if response.status_code != 200:  # Status code not OK
-                raise(Exception(f'Request to {url} failed with code: {response.status_code}'))
+                raise Exception(f'REQUEST ERROR: Request to {url} failed with code: {response.status_code}')
 
         return data
 
@@ -33,7 +33,7 @@ class EsiHandler(object):
         """
         get_market_groups = 'https://esi.evetech.net/latest/markets/groups/?datasource=tranquility'
         try:
-            return EsiHandler.perform_request(get_market_groups)
+            return EsiHandler.__perform_request(get_market_groups)
         except Exception as e:
             # FIXME: Perform proper error handling
             pass
@@ -47,7 +47,7 @@ class EsiHandler(object):
         """
         get_universe_types_typeid = f'https://esi.evetech.net/latest/universe/types/{type_id}/?datasource=tranquility&language=en-us'
         try:
-            return EsiHandler.perform_request(get_universe_types_typeid)
+            return EsiHandler.__perform_request(get_universe_types_typeid)
         except Exception as e:
             # FIXME: Perform proper error handling
             pass
@@ -60,7 +60,7 @@ class EsiHandler(object):
         """
         get_universe_regions = 'https://esi.evetech.net/latest/universe/regions/?datasource=tranquility'
         try:
-            return EsiHandler.perform_request(get_universe_regions)
+            return EsiHandler.__perform_request(get_universe_regions)
         except Exception as e:
             # FIXME: Perform proper error handling
             pass
@@ -74,7 +74,7 @@ class EsiHandler(object):
         """
         get_universe_regions_regionid = f'https://esi.evetech.net/latest/universe/regions/{region_id}/?datasource=tranquility&language=en-us'
         try:
-            return EsiHandler.perform_request(get_universe_regions_regionid)
+            return EsiHandler.__perform_request(get_universe_regions_regionid)
         except Exception as e:
             # FIXME: Perform proper error handling
             pass
@@ -89,7 +89,7 @@ class EsiHandler(object):
         """
         get_markets_regionid_history_typeid = f'https://esi.evetech.net/latest/markets/{region_id}/history/?datasource=tranquility&type_id={type_id}'
         try:
-            return EsiHandler.perform_request(get_markets_regionid_history_typeid)
+            return EsiHandler.__perform_request(get_markets_regionid_history_typeid)
         except Exception as e:
             # FIXME: Perform proper error handling
             pass
