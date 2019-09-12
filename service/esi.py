@@ -4,6 +4,7 @@ that enables interactions between PyICA and the EvE API (ESI). More info here: h
 """
 
 import requests
+import logging
 
 
 class EsiHandler(object):
@@ -21,7 +22,7 @@ class EsiHandler(object):
             if response:
                 data = response.json()
             if response.status_code != 200:  # Status code not OK
-                raise Exception(f'REQUEST ERROR: Request to {url} failed with code: {response.status_code}')
+                raise RuntimeError(f'REQUEST ERROR: Request to {url} failed with code: {response.status_code}')
 
         return data
 
@@ -34,9 +35,9 @@ class EsiHandler(object):
         get_market_groups = 'https://esi.evetech.net/latest/markets/groups/?datasource=tranquility'
         try:
             return EsiHandler.__perform_request(get_market_groups)
-        except Exception as e:
-            # FIXME: Perform proper error handling
-            pass
+        except RuntimeError as error:
+            logging.warning(error)
+            return None
 
     @staticmethod
     def request_type_info(type_id):
@@ -47,10 +48,11 @@ class EsiHandler(object):
         """
         get_universe_types_typeid = f'https://esi.evetech.net/latest/universe/types/{type_id}/?datasource=tranquility&language=en-us'
         try:
+            assert type(type_id) == int, "Invalid input"
             return EsiHandler.__perform_request(get_universe_types_typeid)
-        except Exception as e:
-            # FIXME: Perform proper error handling
-            pass
+        except (RuntimeError, AssertionError) as error:
+            logging.warning(error)
+            return None
 
     @staticmethod
     def request_regions():
@@ -61,9 +63,9 @@ class EsiHandler(object):
         get_universe_regions = 'https://esi.evetech.net/latest/universe/regions/?datasource=tranquility'
         try:
             return EsiHandler.__perform_request(get_universe_regions)
-        except Exception as e:
-            # FIXME: Perform proper error handling
-            pass
+        except RuntimeError as error:
+            logging.warning(error)
+            return None
 
     @staticmethod
     def request_region_info(region_id):
@@ -74,10 +76,11 @@ class EsiHandler(object):
         """
         get_universe_regions_regionid = f'https://esi.evetech.net/latest/universe/regions/{region_id}/?datasource=tranquility&language=en-us'
         try:
+            assert type(region_id) == int, "Invalid input"
             return EsiHandler.__perform_request(get_universe_regions_regionid)
-        except Exception as e:
-            # FIXME: Perform proper error handling
-            pass
+        except (RuntimeError, AssertionError) as error:
+            logging.warning(error)
+            return None
 
     @staticmethod
     def request_market_region_history(region_id, type_id):
@@ -89,7 +92,8 @@ class EsiHandler(object):
         """
         get_markets_regionid_history_typeid = f'https://esi.evetech.net/latest/markets/{region_id}/history/?datasource=tranquility&type_id={type_id}'
         try:
+            assert type(region_id) == type(type_id) == int, "Invalid Input"
             return EsiHandler.__perform_request(get_markets_regionid_history_typeid)
-        except Exception as e:
-            # FIXME: Perform proper error handling
-            pass
+        except (RuntimeError, AssertionError) as error:
+            logging.warning(error)
+            return None
