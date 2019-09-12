@@ -18,7 +18,7 @@ class Region(models.Model):
     """
     In-Game region
     """
-    region_id = models.IntegerField()
+    region_id = models.IntegerField(unique=True)
     region_name = models.CharField(max_length=CHARFIELD_MAX_LEN)
 
 
@@ -49,7 +49,12 @@ class RegionMarketHistory(models.Model):
 
 class StructureMarketData(models.Model):
     """
-    Market data of an entity in a structure
+    Market data of an entity in a structure/station
     """
     type_id = models.ForeignKey('Type', to_field='type_id', on_delete=models.CASCADE)
     structure_id = models.ForeignKey('Structure', to_field='structure_id', on_delete=models.CASCADE)
+    average = models.FloatField()  # Average Price
+    highest = models.FloatField()  # Highest Price
+    lowest = models.FloatField()  # Lowest Price
+    sell_volume = models.IntegerField()  # Total volume of entity as sell orders
+    buy_volume = models.IntegerField()  # Total volume of entity as buy orders

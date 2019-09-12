@@ -2,4 +2,4 @@ from django.apps import AppConfig
 
 
 class KrabbacusConfig(AppConfig):
-    name = 'krabbacus'
+    name = 'import_calculator'
