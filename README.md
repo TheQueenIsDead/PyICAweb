@@ -12,11 +12,11 @@ On Ubuntu:
 
 Please install all Python dependencies.
 
-`$ pip in stall -r requirements.txt`
+`$ pip install -r requirements.txt`
 
 ## Contents
 ### Existing Features:
- `pyica_web/`: Root of the project. Contains config files.
+`pyica_web/`: Root of the project. Contains config files for PyICA, Django and Celery.
 
 `import_calculator/`: Table that shows raw market data along with some computed stats to help you decide what to import 
 to your home market.
