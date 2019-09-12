@@ -23,7 +23,7 @@ This project requires Python >= 3.6. Please install all Python dependencies.
 `import_calculator/`: Table that shows raw market data along with some computed stats to help you decide what to import 
 to your home market.
 
-### Coming soon: 
+### Coming soon™: 
 `predictive_analytics/`: Creates predictive demand analytics based on already existing markets in EvE online.
 
 `fitting_calculator/`: Creates a shopping list to build fits in the cheapest way possible. Lists which modules to import 
