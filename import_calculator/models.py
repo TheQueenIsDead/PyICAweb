@@ -30,7 +30,7 @@ class Structure(models.Model):
     structure_name = models.CharField(max_length=CHARFIELD_MAX_LEN)
     owner_id = models.IntegerField()  # Corporation ID
     solar_system_id = models.IntegerField()
-    type_id = models.IntegerField()
+    type_id = models.IntegerField()  # Type of structure
 
 
 class RegionMarketHistory(models.Model):
