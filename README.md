@@ -10,18 +10,20 @@ On Ubuntu:
 
 `$ sudo apt-get install rabbitmq-server`
 
-Please install all Python dependencies.
+This project requires Python >= 3.6. Please install all Python dependencies.
 
 `$ pip install -r requirements.txt`
 
 ## Contents
 ### Existing Features:
-`pyica_web/`: Root of the project. Contains config files for PyICA, Django and Celery.
+`pyica_web/`: Contains config files for PyICA, Django and Celery. Modify at your own risk.
+
+`service/`: Supporting modules that help Celery execute background tasks.
 
 `import_calculator/`: Table that shows raw market data along with some computed stats to help you decide what to import 
 to your home market.
 
-### Coming soon: 
+### Coming soon™: 
 `predictive_analytics/`: Creates predictive demand analytics based on already existing markets in EvE online.
 
 `fitting_calculator/`: Creates a shopping list to build fits in the cheapest way possible. Lists which modules to import 
