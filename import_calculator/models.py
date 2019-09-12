@@ -4,12 +4,20 @@ from django.db import models
 CHARFIELD_MAX_LEN = 256
 
 
-# Create your models here.
+class MarketGroup(models.Model):
+    """
+    In-Game entity market group
+    """
+    market_group_id = models.IntegerField(unique=True)
+    market_group_name = models.CharField(max_length=CHARFIELD_MAX_LEN)
+
+
 class Type(models.Model):
     """
     In-Game entity that is marketable
     """
     type_id = models.IntegerField(unique=True)
+    market_group_id = models.ForeignKey('MarketGroup', to_field='market_group_id', on_delete=models.CASCADE)
     type_name = models.CharField(max_length=CHARFIELD_MAX_LEN)
     type_vol = models.CharField(max_length=CHARFIELD_MAX_LEN)
 
