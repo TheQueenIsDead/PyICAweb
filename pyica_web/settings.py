@@ -9,7 +9,6 @@ CELERY_BROKER_URL = 'amqp://guest:guest@localhost//'
 CELERY_ACCEPT_CONTENT = ['json']
 CELERY_RESULT_BACKEND = 'db+sqlite:///results.sqlite'
 CELERY_TASK_SERIALIZER = 'json'
-CELERY_CACHE_BACKEND = 'django-cache'
 
 """
 Django settings for pyica_web project.
@@ -46,6 +45,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_celery_results',
+    'django_celery_beat',
     'import_calculator'
 ]
 
